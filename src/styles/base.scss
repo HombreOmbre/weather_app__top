@@ -1,0 +1,12 @@
+body {
+    width: 100%;
+    min-height: 100vh;
+    background: url('./assets/bg.svg') no-repeat center center / cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #171717;
+}
