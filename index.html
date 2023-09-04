@@ -3,11 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
-    <title>Document</title>
+    <title>Weather app</title>
+    <script src="https://kit.fontawesome.com/69d87e9fbb.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <main id="content"></main>
+    <main id="main" class="main-section">
+        <div class="search-box">
+            <input type="search" name="" id="" class="search-box__input" placeholder="Search Location...">
+            <button type="button" class="search-box__search-btn btn">
+                <i class="fa-solid fa-search search-box__search-btn_icon" style="color: black;"></i>
+            </button>
+        </div>
+        <section class="weather-daily">
+            <section class="weather-info">
+    
+                <div class="weather-info__city-icon-box">
+                    <p class="weather-info__city-icon-box__city"></p> 
+                    <img src="#" alt="" class="weather-info__city-icon-box__icon">
+                </div>
+                <p class="weather-info__description"></p>
+                <p class="weather-info__temp"></p>
+                <p class="weather-info__date"></p>
+                <p class="weather-info__time"></p>
+        
+                <div class="button" id="button-3">
+                    <input type="checkbox" class="checkbox" />
+                    <div class="knobs"></div>
+                    <div class="layer"></div>
+                  </div>
+                </div>
+            </section>
+            <section class="weather-details">
+                <div class="weather-details__item">
+                    <i class="fa-solid fa-temperature-high weather-details__item__icon"></i> 
+                    <div class="weather-details__item__info">
+                        <p class="weather-details__item__info__name">Feels Like</p>
+                        <p class="weather-details__item__info__value feels_like_temp"></p>
+                    </div>
+                </div>
+                <div class="weather-details__item">
+                    <i class="fa-solid fa-droplet weather-details__item__icon"></i>
+                    <div class="weather-details__item__info">
+                        <p class="weather-details__item__info__name">Humidity</p>
+                        <p class="weather-details__item__info__value humidity"></p>
+                    </div>
+                </div>
+                <div class="weather-details__item">
+                    <i class="fa-solid fa-gauge-simple-high weather-details__item__icon"></i>
+                    <div class="weather-details__item__info">
+                        <p class="weather-details__item__info__name">Pressure</p>
+                        <p class="weather-details__item__info__value pressure"></p>
+                    </div>
+                </div>
+                <div class="weather-details__item">
+                    <i class="fa-solid fa-wind weather-details__item__icon"></i>
+                    <div class="weather-details__item__info">
+                        <p class="weather-details__item__info__name">Wind Speed</p>
+                        <p class="weather-details__item__info__value wind-speed"></p>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </main>
 
     <script src="./main.js"></script>
 </body>
