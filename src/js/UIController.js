@@ -46,7 +46,7 @@ const UIController = () => {
 
     const showTempInfo = (temp, isCelsiusOrFarenheit) => {
         const dailyTempElem = document.querySelector('.weather-info__temp');
-        const dailyTemp = Math.round(temp * 100) / 100;
+        const dailyTemp = Math.round(temp * 10) / 10;
         if (isCelsiusOrFarenheit) {
             dailyTempElem.textContent = `${dailyTemp} °F`;
         } else {
@@ -91,7 +91,7 @@ const UIController = () => {
 
         if (isMetricOrImperial) {
             windSpeedElem.textContent = `${
-                Math.round(windSpeed * 100) / 100
+                Math.round(windSpeed * 100) / 10
             } mph`;
         } else {
             windSpeedElem.textContent = `${
