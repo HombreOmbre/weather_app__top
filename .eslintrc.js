@@ -12,6 +12,7 @@ module.exports = {
     },
     rules: {
         'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+        'import/no-extraneous-dependencies': 'off',
         'prettier/prettier': [
             'error',
             {
