@@ -1,40 +1,35 @@
 const APIContorller = () => {
-    const apiKey = 'cfb858272abd3fbbac3ebd2e5e0e3afa';
+    const apiKey = '12a3033a8c864c6fb35193919230608';
 
-    async function getCoordinatesOfCity(cityName) {
-        const urlForGeocoding = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${apiKey}`;
+    async function getCurrentWeatherData(cityName) {
+        const urlForCurrentWeather = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}`;
 
         try {
-            const fetchCoordinates = await fetch(urlForGeocoding);
-            const parseData = await fetchCoordinates.json();
-            const { lat, lon } = await parseData[0];
+            const fetchWeather = await fetch(`${urlForCurrentWeather}`);
+            const parseWeatherData = await fetchWeather.json();
 
-            return { lat, lon };
+            return parseWeatherData;
         } catch (err) {
             return err;
         }
     }
 
-    async function getWeatherData(cityName) {
-        const city = cityName || 'Warsaw';
-        const urlForWeather =
-            'https://api.openweathermap.org/data/2.5/weather?';
-        try {
-            const coordinatesOfTheCity = await getCoordinatesOfCity(city);
-            const fetchWeather = await fetch(
-                `${urlForWeather}lat=${coordinatesOfTheCity.lat}&lon=${coordinatesOfTheCity.lon}&units=metric&appid=${apiKey}`,
-            );
-            const parseWeatherData = await fetchWeather.json();
-            const { main, name, sys, weather, wind } = await parseWeatherData;
+    async function getMatchingDataForAutocomplete(cityName) {
+        const urlForMatchingData = `http://api.weatherapi.com/v1/search.json?key=${apiKey}&q=${cityName}`;
 
-            return { main, name, sys, weather, wind };
+        try {
+            const fetchMatchingData = await fetch(urlForMatchingData);
+            const parseMatchingData = await fetchMatchingData.json();
+
+            return parseMatchingData;
         } catch (err) {
             return err;
         }
     }
 
     return {
-        getWeatherData,
+        getCurrentWeatherData,
+        getMatchingDataForAutocomplete,
     };
 };
 
