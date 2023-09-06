@@ -1,3 +1,3 @@
 import UIController from './UIController';
 
-UIController.manageDailyWeatherData();
+UIController.renderWeatherInfoAndAddEventListeners();
