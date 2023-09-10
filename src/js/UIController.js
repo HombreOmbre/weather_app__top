@@ -1,9 +1,8 @@
 import format from 'date-fns/format';
 import APIController from './APIController';
+import swiperController from './swiperController';
 
 const UIController = () => {
-    let nameOfThePlace = 'Warsaw';
-
     const showCityName = (cityName) => {
         const cityNameElem = document.querySelector(
             '.weather-info__city-icon-box__city',
@@ -121,17 +120,72 @@ const UIController = () => {
             tempToggle.checked,
         );
 
-        console.log(weatherCurrentData);
+        return weatherCurrentData.forecast.forecastday;
     };
 
-    const manageWeatherData = (place) => {
-        const cityName = place || nameOfThePlace;
+    // Render daily forecast
+    const renderDailyForecast = (dailyForecast) => {
+        const forecastDailySwiper = document.querySelector(
+            '.forecast-daily-swiper__wrapper',
+        );
+        const tempToggle = document.querySelector('.checkbox').checked;
 
-        console.log(cityName);
+        forecastDailySwiper.innerHTML = '';
 
-        const dailyWeatherData = APIController.getCurrentWeatherData(cityName);
+        dailyForecast.forEach((item) => {
+            forecastDailySwiper.innerHTML += `
+                <div class="swiper-slide forecast-daily-swiper__wrapper__item">
+                    <img class="forecast-daily-swiper__wrapper__item__icon" src="http:${
+                        item.day.condition.icon
+                    }" alt="${item.day.condition.text} icon">
+                    <p class="forecast-daily-swiper__wrapper__item__main-temp">${
+                        tempToggle === true
+                            ? `${item.day.avgtemp_f} °F`
+                            : `${item.day.avgtemp_c} °C`
+                    }</p>
+                    <p class="forecast-daily-swiper__wrapper__item__describe">${
+                        item.day.condition.text
+                    }</p>
+                    <div class="forecast-daily-swiper__wrapper__item__temp-container">
+                        <p class="forecast-daily-swiper__wrapper__item__temp-container__temp temp-high">${
+                            tempToggle === true
+                                ? `H : ${`${item.day.maxtemp_f} °F`}`
+                                : `L : ${`${item.day.maxtemp_c} °C`}`
+                        }</p>
+                        <p class="forecast-daily-swiper__wrapper__item__temp-container__temp temp-low">${
+                            tempToggle === true
+                                ? `H : ${`${item.day.mintemp_f} °F`}`
+                                : `L : ${`${item.day.mintemp_c} °C`}`
+                        }</p>
+                    </div>
+                    <p class="forecast-daily-swiper__wrapper__item__week-day">${format(
+                        new Date(item.date),
+                        'EEEE',
+                    )}</p>
+                    <p class="forecast-daily-swiper__wrapper__item__date">${format(
+                        new Date(item.date),
+                        'PPP',
+                    )}</p>
+                </div>
+            `;
+        });
 
-        dailyWeatherData.then((data) => renderCurrentWeatherData(data));
+        swiperController.addDailyForecastSwiper();
+
+        return dailyForecast[0].hour;
+    };
+
+    const renderHourlyForecast = (hourlyForecast) => {
+        console.log(hourlyForecast);
+    };
+
+    const manageWeatherData = () => {
+        const forecastData = APIController.getDailyAndForecastData();
+
+        forecastData
+            .then((data) => renderCurrentWeatherData(data))
+            .then((data) => renderDailyForecast(data))
+            .then((data) => renderHourlyForecast(data));
     };
 
     // Datalist for search box
@@ -158,21 +212,21 @@ const UIController = () => {
 
     const handleSearchInputValue = (e) => {
         if (e.key === 'Enter' && e.target.value !== '') {
-            manageWeatherData(e.target.value.trim());
-            nameOfThePlace = e.target.value.trim();
+            APIController.changeCurrentLocation(e.target.value.trim());
+            manageWeatherData();
         } else if (
             e.target.classList[0] === 'search-box__search-btn' ||
             e.target.classList[0] === 'fa-solid'
         ) {
-            manageWeatherData(
+            APIController.changeCurrentLocation(
                 document.querySelector('#search-box').value.trim(),
             );
-            nameOfThePlace = document.querySelector('#search-box').value.trim();
+            manageWeatherData();
         }
     };
 
     const changeUnits = () => {
-        manageWeatherData(nameOfThePlace);
+        manageWeatherData();
     };
 
     const addEventListenersToThePage = () => {
