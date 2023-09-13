@@ -90,7 +90,7 @@
   border-radius: 100px;
 }
 
-.button.b2 {
+.button {
   border-radius: 2px;
 }
 
@@ -116,7 +116,7 @@
   z-index: 1;
 }
 
-#button-3 .knobs:before {
+#button-1 .knobs:before {
   content: "°C";
   position: absolute;
   top: 4px;
@@ -134,21 +134,21 @@
   transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
 }
 
-#button-3 .checkbox:active + .knobs:before {
+#button-1 .checkbox:active + .knobs:before {
   width: 46px;
   border-radius: 100px;
 }
 
-#button-3 .checkbox:checked:active + .knobs:before {
+#button-1 .checkbox:checked:active + .knobs:before {
   margin-left: -26px;
 }
 
-#button-3 .checkbox:checked + .knobs:before {
+#button-1 .checkbox:checked + .knobs:before {
   content: "°F";
   left: 42px;
-  background-color: #03a9f4;;
+  background-color: #03a9f4;
 }
 
-#button-3 .checkbox:checked ~ .layer {
+#button-1 .checkbox:checked ~ .layer {
   background-color: rgba(238, 238, 238, 1);
 }
