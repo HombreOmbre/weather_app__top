@@ -125,10 +125,10 @@ const UIController = () => {
 
     // Render daily forecast
     const renderDailyForecast = (dailyForecast) => {
+        const tempToggle = document.querySelector('.checkbox').checked;
         const forecastDailySwiper = document.querySelector(
             '.forecast-daily-swiper__wrapper',
         );
-        const tempToggle = document.querySelector('.checkbox').checked;
 
         forecastDailySwiper.innerHTML = '';
 
@@ -150,11 +150,11 @@ const UIController = () => {
                         <p class="forecast-daily-swiper__wrapper__item__temp-container__temp temp-high">${
                             tempToggle === true
                                 ? `H : ${`${item.day.maxtemp_f} °F`}`
-                                : `L : ${`${item.day.maxtemp_c} °C`}`
+                                : `H : ${`${item.day.maxtemp_c} °C`}`
                         }</p>
                         <p class="forecast-daily-swiper__wrapper__item__temp-container__temp temp-low">${
                             tempToggle === true
-                                ? `H : ${`${item.day.mintemp_f} °F`}`
+                                ? `L : ${`${item.day.mintemp_f} °F`}`
                                 : `L : ${`${item.day.mintemp_c} °C`}`
                         }</p>
                     </div>
@@ -176,7 +176,36 @@ const UIController = () => {
     };
 
     const renderHourlyForecast = (hourlyForecast) => {
-        console.log(hourlyForecast);
+        const tempToggle = document.querySelector('.checkbox').checked;
+        const forecastHourlySwiper = document.querySelector(
+            '.forecast-hourly-swiper__wrapper',
+        );
+
+        forecastHourlySwiper.innerHTML = '';
+
+        hourlyForecast.forEach((item) => {
+            forecastHourlySwiper.innerHTML += `
+                <div class="swiper-slide forecast-hourly-swiper__wrapper__item">
+                    <p class="forecast-hourly-swiper__wrapper__item__hour">${format(
+                        new Date(item.time),
+                        'p',
+                    )}</p>
+                    <img src="http:${item.condition.icon}" alt="${
+                        item.condition.text
+                    } icon" class="forecast-hourly-swiper__wrapper__item__icon"></img>
+                    <p class="forecast-hourly-swiper__wrapper__item__describe">${
+                        item.condition.text
+                    }</p>
+                    <p class="forecast-hourly-swiper__wrapper__item__temp">${
+                        tempToggle === true
+                            ? `${`${item.temp_f} °F`}`
+                            : `${`${item.temp_c} °C`}`
+                    }</p>
+                </div>
+            `;
+        });
+
+        swiperController.addHourlyForecastSwiper();
     };
 
     const manageWeatherData = () => {
@@ -210,10 +239,19 @@ const UIController = () => {
         }
     };
 
+    const clearSearchBoxAndDatalist = () => {
+        const searchBoxInput = document.querySelector('.search-box__input');
+        const searchBoxDatalist = document.querySelector('#matching-data');
+
+        searchBoxInput.value = '';
+        searchBoxDatalist.innerHTML = '';
+    };
+
     const handleSearchInputValue = (e) => {
         if (e.key === 'Enter' && e.target.value !== '') {
             APIController.changeCurrentLocation(e.target.value.trim());
             manageWeatherData();
+            clearSearchBoxAndDatalist();
         } else if (
             e.target.classList[0] === 'search-box__search-btn' ||
             e.target.classList[0] === 'fa-solid'
@@ -222,11 +260,24 @@ const UIController = () => {
                 document.querySelector('#search-box').value.trim(),
             );
             manageWeatherData();
+            clearSearchBoxAndDatalist();
         }
     };
 
     const changeUnits = () => {
-        manageWeatherData();
+        const currentLocation = APIController.getCurrentLocationData();
+
+        renderCurrentWeatherData(currentLocation);
+        renderDailyForecast(currentLocation.forecast.forecastday);
+        renderHourlyForecast(currentLocation.forecast.forecastday[0].hour);
+    };
+
+    const toggleBetweenDailyAndHourly = () => {
+        const dailyForecast = document.querySelector('.swiper-daily');
+        const hourlyForecast = document.querySelector('.swiper-hourly');
+
+        dailyForecast.classList.toggle('active');
+        hourlyForecast.classList.toggle('active');
     };
 
     const addEventListenersToThePage = () => {
@@ -235,11 +286,16 @@ const UIController = () => {
         );
         const searchBoxInput = document.querySelector('.search-box__input');
         const tempToggle = document.querySelector('.checkbox');
+        const dailyHourlyToggle = document.querySelector('.checkbox-forecast');
 
         searchBoxInput.addEventListener('input', manageSearchDatalist);
         searchBoxSubmitBtn.addEventListener('click', handleSearchInputValue);
         searchBoxInput.addEventListener('keypress', handleSearchInputValue);
         tempToggle.addEventListener('change', changeUnits);
+        dailyHourlyToggle.addEventListener(
+            'change',
+            toggleBetweenDailyAndHourly,
+        );
     };
 
     const renderWeatherInfoAndAddEventListeners = () => {
