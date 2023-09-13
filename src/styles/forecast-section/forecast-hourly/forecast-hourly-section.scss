@@ -1,0 +1,35 @@
+.forecast-hourly-swiper {
+    max-width: 100%;
+    height: auto;
+    overflow: hidden;
+    display: none;
+    margin-top: 20px;
+    text-align: center;
+    
+    &.active {
+        display: block;
+    }
+
+    &__wrapper {
+
+        &__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            &__hour, &__describe {
+                font-size: 15px;
+                font-weight: 700;
+                margin: 0;
+            }
+
+            &__temp {
+                font-size: 20px;
+                font-weight: 700;
+                margin: 5px 0 0 0;
+                border-top: 2px solid #151515;
+            }
+        }
+    }
+}

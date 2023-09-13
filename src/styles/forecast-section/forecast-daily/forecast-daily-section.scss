@@ -2,6 +2,12 @@
     max-width: 100%;
     height: auto;
     overflow: hidden;
+    display: none;
+    margin-top: 20px;
+
+    &.active {
+        display: block;
+    }
 
     &__wrapper {
 
@@ -36,7 +42,13 @@
                 }
             }
 
-            &__week-day, &__date {
+            &__week-day {
+                font-size: 14px;
+                font-weight: 700;
+                margin: 5px 0 0 0;
+            }
+            
+            &__date {
                 font-size: 14px;
                 font-weight: 400;
                 margin: 5px 0 0 0;

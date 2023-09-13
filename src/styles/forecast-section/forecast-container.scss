@@ -1,0 +1,93 @@
+.forecast-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+// daily/hourly forecast toggle
+.knobs-forecast,
+.layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.button {
+  position: relative;
+  top: 50%;
+  width: 74px;
+  height: 36px;
+  margin: 20px 0 0 0;
+  overflow: hidden;
+}
+
+.button,
+.button .layer {
+  border-radius: 100px;
+}
+
+.button {
+  border-radius: 2px;
+}
+
+.checkbox-forecast {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.knobs-forecast {
+  z-index: 2;
+}
+
+.layer {
+  width: 100%;
+  background-color: rgba(238, 238, 238, 1);
+  transition: 0.3s ease all;
+  z-index: 1;
+}
+
+#button-2 .knobs-forecast:before {
+    content: "D";
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    width: 20px;
+    height: 10px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    padding: 9px 4px;
+    background-color: #024462;
+    border-radius: 50%;
+    transition: 0.3s ease all, left 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15);
+  }
+  
+  #button-2 .checkbox-forecast:active + .knobs-forecast:before {
+    width: 46px;
+    border-radius: 100px;
+  }
+  
+  #button-2 .checkbox-forecast:checked:active + .knobs-forecast:before {
+    margin-left: -26px;
+  }
+  
+  #button-2 .checkbox-forecast:checked + .knobs-forecast:before {
+    content: "H";
+    left: 42px;
+    background-color: #024462;
+  }
+  
+  #button-2 .checkbox-forecast:checked ~ .layer {
+    background-color: rgba(238, 238, 238, 1);
+  }
