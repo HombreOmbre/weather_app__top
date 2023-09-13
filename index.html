@@ -31,7 +31,7 @@
                 <p class="weather-info__date"></p>
                 <p class="weather-info__time"></p>
         
-                <div class="button" id="button-3">
+                <div class="button" id="button-1">
                     <input type="checkbox" class="checkbox" />
                     <div class="knobs"></div>
                     <div class="layer"></div>
@@ -69,12 +69,24 @@
                 </div>
             </section>
         </section>
-            <!-- Slider main container -->
-                <section class="swiper-daily forecast-daily-swiper">
-                    <!-- Additional required wrapper -->
-                    <div class="swiper-wrapper forecast-daily-swiper__wrapper"></div>
-                    
-                </section>
+            
+        <section class="forecast-container">
+            <div class="forecast-container__switcher">
+                <div class="button" id="button-2">
+                    <input type="checkbox" class="checkbox-forecast" />
+                    <div class="knobs-forecast"></div>
+                    <div class="layer"></div>
+                  </div>
+                </div>
+            </div>
+            <section class="swiper-daily forecast-daily-swiper active">
+                <div class="swiper-wrapper forecast-daily-swiper__wrapper"></div>
+            </section>
+
+            <section class="swiper-hourly forecast-hourly-swiper">
+                <div class="swiper-wrapper forecast-hourly-swiper__wrapper"></div>
+            </section>
+        </section>    
     </main>
 
     <script src="./main.js"></script>
