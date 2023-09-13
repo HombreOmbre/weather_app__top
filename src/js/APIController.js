@@ -1,17 +1,22 @@
 const APIContorller = () => {
     const apiKey = '12a3033a8c864c6fb35193919230608';
-    let currentLocation = 'Warsaw';
+    let currentLocationData = '';
 
-    const changeCurrentLocation = (newLocation) => {
-        currentLocation = newLocation;
+    const changeCurrentLocationData = (newLocationData) => {
+        currentLocationData = newLocationData;
     };
 
-    async function getDailyAndForecastData() {
-        const urlForForecast = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&days=4&q=${currentLocation}`;
+    const getCurrentLocationData = () => {
+        return currentLocationData;
+    };
+
+    async function getDailyAndForecastData(newLocation = 'Warsaw') {
+        const urlForForecast = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&days=4&q=${newLocation}`;
 
         try {
             const fetchForecastData = await fetch(urlForForecast);
             const parseFetchinData = await fetchForecastData.json();
+            changeCurrentLocationData(parseFetchinData);
 
             return parseFetchinData;
         } catch (err) {
@@ -35,7 +40,7 @@ const APIContorller = () => {
     return {
         getMatchingDataForAutocomplete,
         getDailyAndForecastData,
-        changeCurrentLocation,
+        getCurrentLocationData,
     };
 };
 
