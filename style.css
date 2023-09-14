@@ -440,27 +440,34 @@ body {
 
 .search-box {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-bottom: 2px solid var(--font-clr);
   padding: 10px 0px 5px 0px;
   gap: .5rem; }
-  .search-box__input {
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 0 5px; }
-    .search-box__input::placeholder {
-      color: var(--font-clr);
-      font-weight: 300;
-      opacity: 1; }
-  .search-box__search-btn {
-    padding-right: 5px; }
-    .search-box__search-btn__icon {
-      font-size: 18px;
-      color: var(--font-clr);
-      vertical-align: baseline; }
+  .search-box__container {
+    border-bottom: 2px solid var(--font-clr); }
+    .search-box__container__input {
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 0 5px; }
+      .search-box__container__input::placeholder {
+        color: var(--font-clr);
+        font-weight: 300;
+        opacity: 1; }
+    .search-box__container__search-btn {
+      padding-right: 5px; }
+      .search-box__container__search-btn__icon {
+        font-size: 18px;
+        color: var(--font-clr);
+        vertical-align: baseline; }
+  .search-box__error-msg {
+    display: none;
+    color: #761b1b;
+    font-size: 12px; }
+    .search-box__error-msg.error {
+      display: block; }
 
 .weather-daily {
   width: 100%;
