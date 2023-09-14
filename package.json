@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass": "node-sass src/styles/main.scss dist/style.css -w"
+    "sass": "node-sass src/styles/main.scss dist/style.css -w",
+    "deploy":"git subtree push --prefix dist origin gh-pages"
   },
   "keywords": [],
   "author": "",
