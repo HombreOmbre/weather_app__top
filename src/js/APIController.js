@@ -11,11 +11,12 @@ const APIContorller = () => {
     };
 
     async function getDailyAndForecastData(newLocation = 'Warsaw') {
-        const urlForForecast = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&days=4&q=${newLocation}`;
+        const urlForForecast = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&days=4&q=${newLocation.trim()}`;
 
         try {
             const fetchForecastData = await fetch(urlForForecast);
             const parseFetchinData = await fetchForecastData.json();
+
             changeCurrentLocationData(parseFetchinData);
 
             return parseFetchinData;
