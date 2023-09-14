@@ -208,8 +208,9 @@ const UIController = () => {
         swiperController.addHourlyForecastSwiper();
     };
 
-    const manageWeatherData = () => {
-        const forecastData = APIController.getDailyAndForecastData();
+    const manageWeatherData = (locationName) => {
+        const forecastData =
+            APIController.getDailyAndForecastData(locationName);
 
         forecastData
             .then((data) => renderCurrentWeatherData(data))
@@ -225,7 +226,7 @@ const UIController = () => {
 
         matchingData.forEach((item) => {
             datalistForSearchBox.innerHTML += `
-                <option value='${item.name}'></option>
+                <option class='data-option' value='${item.name}'></option>
             `;
         });
     };
@@ -240,27 +241,58 @@ const UIController = () => {
     };
 
     const clearSearchBoxAndDatalist = () => {
-        const searchBoxInput = document.querySelector('.search-box__input');
+        const searchBoxInput = document.querySelector(
+            '.search-box__container__input',
+        );
         const searchBoxDatalist = document.querySelector('#matching-data');
 
         searchBoxInput.value = '';
         searchBoxDatalist.innerHTML = '';
     };
 
+    const validateSearchBox = (searchLocation) => {
+        const datalist = [...document.querySelectorAll('.data-option')];
+
+        return datalist.some(
+            (location) =>
+                location.value.toLowerCase() ===
+                searchLocation.trim().toLowerCase(),
+        );
+    };
+
+    const showErrorMessage = () => {
+        const errorMsg = document.querySelector('.search-box__error-msg');
+
+        errorMsg.classList.add('error');
+    };
+
+    const hideErrorMessage = () => {
+        const errorMsg = document.querySelector('.search-box__error-msg');
+
+        errorMsg.classList.remove('error');
+    };
+
     const handleSearchInputValue = (e) => {
-        if (e.key === 'Enter' && e.target.value !== '') {
-            APIController.changeCurrentLocation(e.target.value.trim());
-            manageWeatherData();
-            clearSearchBoxAndDatalist();
-        } else if (
+        if (
+            e.key === 'Enter' ||
             e.target.classList[0] === 'search-box__search-btn' ||
             e.target.classList[0] === 'fa-solid'
         ) {
-            APIController.changeCurrentLocation(
-                document.querySelector('#search-box').value.trim(),
-            );
-            manageWeatherData();
-            clearSearchBoxAndDatalist();
+            if (
+                validateSearchBox(
+                    e.target.value ||
+                        document.querySelector('#search-box').value,
+                )
+            ) {
+                manageWeatherData(
+                    e.target.value ||
+                        document.querySelector('#search-box').value,
+                );
+                clearSearchBoxAndDatalist();
+                hideErrorMessage();
+            } else {
+                showErrorMessage();
+            }
         }
     };
 
@@ -282,9 +314,11 @@ const UIController = () => {
 
     const addEventListenersToThePage = () => {
         const searchBoxSubmitBtn = document.querySelector(
-            '.search-box__search-btn',
+            '.search-box__container__search-btn',
         );
-        const searchBoxInput = document.querySelector('.search-box__input');
+        const searchBoxInput = document.querySelector(
+            '.search-box__container__input',
+        );
         const tempToggle = document.querySelector('.checkbox');
         const dailyHourlyToggle = document.querySelector('.checkbox-forecast');
 
