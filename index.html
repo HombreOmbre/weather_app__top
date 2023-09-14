@@ -13,11 +13,18 @@
 <body>
     <main id="main" class="main-section">
         <div class="search-box">
-            <input type="search" list="matching-data" name="search-box" id="search-box" class="search-box__input" placeholder="Search Location...">
-            <datalist id="matching-data"></datalist>
-            <button type="button" class="search-box__search-btn btn">
-                <i class="fa-solid fa-search search-box__search-btn_icon" style="color: black;"></i>
-            </button>
+            <div class="search-box__container">
+                <input type="search" list="matching-data" name="search-box" id="search-box" class="search-box__container__input" placeholder="Search Location...">
+                <datalist id="matching-data"></datalist>
+                <button type="button" class="search-box__container__search-btn btn">
+                    <i class="fa-solid fa-search search-box__container__search-btn_icon" style="color: black;"></i>
+                </button>
+            </div>
+            <div class="search-box__error-msg">
+                Location not found.
+                <br />
+                Search must be in the form of "City", "City, State" or "City, Country".
+            </div>
         </div>
         <section class="weather-daily">
             <section class="weather-info">
